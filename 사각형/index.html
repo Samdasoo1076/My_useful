@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>도형 넓이와 둘레 계산</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>도형 넓이와 둘레 계산</h1>
+        <div class="shape-selection">
+            <div class="shape-option">
+                <input type="radio" id="rectangle" name="shape" checked aria-label="직사각형">
+                <div class="shape-label">직사각형</div>
+            </div>
+            <div class="shape-option">
+                <input type="radio" id="circle" name="shape" aria-label="원">
+                <div class="shape-label">원</div>
+            </div>
+        </div>
+        <div class="input-fields">
+            <input type="number" id="width" placeholder="너비(또는 반지름) 입력" aria-label="너비(또는 반지름)">
+            <input type="number" id="height" placeholder="높이 입력" aria-label="높이">
+        </div>
+        <button id="calculateBtn">계산</button>
+        <p id="result" aria-label="결과 영역">결과: 너비(또는 반지름)와 높이를 입력하고 '계산' 버튼을 누르세요.</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
