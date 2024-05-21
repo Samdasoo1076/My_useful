@@ -7,13 +7,12 @@ const resultElement = document.getElementById('result');
 // 비디오 스트림 설정
 navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then(stream => { //미디어 스트림 요청 및 비디오 미디어 요청, 요청 허용시 실행할 콜백 함수 지정
     video.srcObject = stream; 
-    video.setAttribute('playsinline', true); // iOS 장치 호환성?
     video.play(); //비디오 재생
     requestAnimationFrame(tick); // 새로 렌더링 될때마다 tick 실행
 });
 
 function tick() {
-    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+    if (video.readyState === 4) {
         // Canvas 크기 설정
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
@@ -27,9 +26,9 @@ function tick() {
         });
 
         if (code) {
-            resultElement.textContent = `QR Code Content: ${code.data}`;
+            resultElement.textContent = `QRC 데이터: ${code.data}`;
         } else {
-            resultElement.textContent = 'QR Code not found.';
+            resultElement.textContent = 'QRC 없음';
         }
     }
     // 다음 프레임 요청
@@ -65,7 +64,7 @@ saveButton.addEventListener('click', () => {
     let savedQRCodes = JSON.parse(localStorage.getItem('savedQRCodes')) || [];
     savedQRCodes.push(text);
     localStorage.setItem('savedQRCodes', JSON.stringify(savedQRCodes));
-    alert('QR Code saved!');
+    alert('QR 저장됨');
 });
 
 // 저장된 QR 코드를 보여주는 기능
@@ -74,7 +73,7 @@ const savedQRCodesContainer = document.getElementById('savedQRCodesContainer');
 
 showSavedButton.addEventListener('click', () => {
     savedQRCodesContainer.innerHTML = ''; // 기존 내용을 제거
-    let savedQRCodes = JSON.parse(localStorage.getItem('savedQRCodes')) || [];
+        let savedQRCodes = JSON.parse(localStorage.getItem('savedQRCodes')) || [];
     if (savedQRCodes.length === 0) {
         savedQRCodesContainer.textContent = '저장안됨';
         return;
@@ -128,12 +127,11 @@ function shareQRCode(text) {
     if (navigator.share) {
         navigator.share({
             title: 'QR Code',
-            text: `Check out this QR Code: ${text}`,
+            text: `QR코드: ${text}`,
         })
-        .then(() => console.log('Successful share'))
+        .then(() => console.log('공유 성공'))
         .catch((error) => console.log('Error sharing', error));
     } else {
-        alert('Web Share API is not supported in your browser.');
+        alert('브라우저 지원 안함');
     }
 }
-
