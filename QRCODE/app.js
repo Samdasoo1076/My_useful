@@ -127,7 +127,9 @@ function shareQRCode(text) {
     if (navigator.share) {
         navigator.share({
             title: 'QR Code',
-            text: `QR코드: ${text}`,
+            text: `QR코드: ${text}`, 
+            text: `https://my-useful.vercel.app/ 로 들어가세요.`
+            
         })
         .then(() => console.log('공유 성공'))
         .catch((error) => console.log('Error sharing', error));
